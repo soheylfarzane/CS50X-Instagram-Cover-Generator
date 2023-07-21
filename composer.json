@@ -7,11 +7,13 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "irazasyed/telegram-bot-sdk": "^3.13",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^4.2"
+        "laravel/ui": "^4.2",
+        "eskandari/persianrender": "^0.1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

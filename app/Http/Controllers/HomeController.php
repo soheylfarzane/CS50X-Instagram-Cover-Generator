@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Telegram\Bot\Api;
+use Illuminate\Support\Facades\Http;
+use Intervention\Image\Facades\Image;
 
+//use Intervention\Image\ImageManagerStatic as Image;
 
 
 class HomeController extends Controller
@@ -24,10 +25,320 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    public function cover()
+    {
+        $mainImage = Image::make('template/cover/01/01.png');
+        $userImage = Image::make('template/cover/01/02.jpg')->fit(1080, 1080);
+
+        $shadowImage = Image::make('template/cover/01/03.png')->fit(1080, 1080);
+        $line1Image = Image::make('template/cover/01/04.png')->fit(1080, 1080);
+        $line2Image = Image::make('template/cover/01/05.png')->fit(1080, 1080);
+        $mainImage->insert($userImage,'center');
+        $mainImage->insert($shadowImage,'center');
+        $mainImage->insert($line1Image,'center');
+        $mainImage->insert($line2Image,'center');
+        $headingText = \PersianRender\PersianRender::render('2 راهکار ورود به اکسپلور');
+        $heading2Text = \PersianRender\PersianRender::render('جذاب ترین کاور ها رو بساز');
+        $textLayer = Image::make('template/cover/01/00.png');
+
+        $textLayer->text($headingText, 540,  758 , function ($font)  {
+            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->size(85);
+            $font->color('#454545');
+            $font->align('center');
+            $font->valign('center');
+        });
+        $textLayer->text($heading2Text, 950,  958 , function ($font)  {
+            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->size(76);
+            $font->color('#6a6a6a');
+            $font->align('right');
+            $font->valign('center');
+        });
+        $textLayer->blur(10);
+        $textLayer->text($headingText, 540,  750 , function ($font)  {
+            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->size(85);
+            $font->color('#ffffff');
+            $font->align('center');
+            $font->valign('center');
+        });
+
+        $textLayer->text($heading2Text, 950,  950 , function ($font)  {
+            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->size(76);
+            $font->color('#f5ed0f');
+            $font->align('right');
+            $font->valign('center');
+        });
+        $mainImage->insert($textLayer,'center');
+
+        return $mainImage->response();
+    }
     public function index()
     {
 
+        return $this->cover();
+
+        $news = $this->newsDigiato(3);
+
+        $newsImage =  $news['imageUrl'];
+        $newsTitle =  $news['title'];
+        $newsDescription =  $news['description'];
+        $image = Image::make('template/story/news/01.png');
+        $featureImage = Image::make($newsImage)->fit(840, 600,);
+        $featureImageOpacity = Image::make($newsImage)->fit(1080, 1920);
+        $image->insert($featureImageOpacity, 'center');
+        $logo = Image::make('template/story/news/logo-w.png')->fit(150, 80);
+//        $image->insert($featureImage, 'top', 0, 105);
+        $image->insert('template/story/news/02.png', 'center');
+        $image->insert($logo, 'bottom-center', 50, 90);
+        $this->writHeading($image,$newsTitle,66,'#ffffff','fonts/YekanBakhFaNum-Black.ttf',-800);
+        $text = $newsDescription;
+        $this->writeJustify($image, $text);
+
+
+
+
+        return $image->response();
 
         return view('home');
     }
+
+    private function writeJustify($image, $text = 'لورم ایپسوم یک متن ساختگی به زبان فارسی می باشد.این New My Lorem Ipsum  است.', $fontSize = 28,$color = '#ffffff',$fontFamily = 'fonts/YekanBakhFaNum-Bold.ttf', $top = 0)
+    {
+        $maxLineWidth = 1550 / $fontSize; // حداکثر عرض خط مورد نظر شما
+
+        // تقسیم متن به جملات با استفاده از نقطه‌ها (.)
+        $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+
+        // آرایه‌ای برای نگه‌داری خطوط جدید
+        $newLines = [];
+        $currentLine = '';
+
+        // تراز کردن کلمات و حفظ جملات با فضای خالی
+        foreach ($sentences as $sentence) {
+            $words = explode(' ', $sentence);
+
+
+            foreach ($words as $key => $word) {
+                $word = str_replace(['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', ')', '('], ['0', '1', '2', '3', '4', '5', '5', '7', '8', '9', '"', '"'], $word);
+                // اگر کلمه شامل اعداد باشد، اعداد انگلیسی را معکوس می‌کنیم
+                if (preg_match('/[0-9]/', $word)) {
+                    $word = strrev($word);
+                }
+
+
+
+                if (preg_match('/[a-zA-Z]/', $word)) {
+                    $newArray[] = $word;
+
+
+                    // Remove the English word from the original array
+
+
+                }
+
+                // اگر کلمه شامل اعداد فارسی باشد، اعداد فارسی را معکوس می‌کنیم
+
+
+                $wordLength = mb_strlen($word, 'UTF-8');
+
+                if (mb_strlen($currentLine . $word . ' ', 'UTF-8') <= $maxLineWidth) {
+                    // اگر کلمه فعلی به همراه فاصله‌ی اضافی به خط فعلی اضافه شود، طول خط فعلی بیشتر از حداکثر عرض خواهد شد
+                    // بنابراین می‌توانیم این کلمه را به خط فعلی اضافه کنیم
+                    if (!empty($currentLine)) {
+                        $currentLine .= ' ';
+                    }
+                    $currentLine .= $word;
+                } else {
+                    // اگر کلمه فعلی بیش از حداکثر عرض خط باشد، آن را به خط جدید اضافه می‌کنیم
+                    $newLines[] = $currentLine;
+                    $currentLine = $word;
+                }
+
+            }
+        }
+
+        // اضافه کردن جمله آخر به خطوط جدید
+        if (!empty($currentLine)) {
+            $newLines[] = $currentLine;
+        }
+
+
+
+        // ترکیب خطوط تراز شده به یکدیگر
+        $justifiedText = implode("\n", $newLines);
+
+        $numberLines = count($newLines);
+
+        for ($i = 0; $i < $numberLines; $i++) {
+            $persian_text_rev = \PersianRender\PersianRender::render($newLines[$i]);
+
+            $image->text($persian_text_rev, 1000, $i * ($fontSize + 30) + 1100 + $top, function ($font) use ($fontSize,$color,$fontFamily) {
+                $font->file($fontFamily);
+                $font->size($fontSize + 6);
+                $font->color($color);
+                $font->align('right');
+                $font->valign('center');
+            });
+        }
+    }
+    private function writHeading($image, $text = 'لورم ایپسوم یک متن ساختگی به زبان فارسی می باشد.این New My Lorem Ipsum  است.', $fontSize = 28,$color = '#ffffff',$fontFamily = 'fonts/YekanBakhFaNum-Bold.ttf', $top = 0)
+    {
+        $maxLineWidth = 1550 / $fontSize; // حداکثر عرض خط مورد نظر شما
+
+        // تقسیم متن به جملات با استفاده از نقطه‌ها (.)
+        $sentences = preg_split('/(?<=[.?!])\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
+
+        // آرایه‌ای برای نگه‌داری خطوط جدید
+        $newLines = [];
+        $currentLine = '';
+
+        // تراز کردن کلمات و حفظ جملات با فضای خالی
+        foreach ($sentences as $sentence) {
+            $words = explode(' ', $sentence);
+
+
+            foreach ($words as $key => $word) {
+                $word = str_replace(['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', ')', '('], ['0', '1', '2', '3', '4', '5', '5', '7', '8', '9', '"', '"'], $word);
+                // اگر کلمه شامل اعداد باشد، اعداد انگلیسی را معکوس می‌کنیم
+                if (preg_match('/[0-9]/', $word)) {
+                    $word = strrev($word);
+                }
+
+
+
+                if (preg_match('/[a-zA-Z]/', $word)) {
+                    $newArray[] = $word;
+
+
+                    // Remove the English word from the original array
+
+
+                }
+
+                // اگر کلمه شامل اعداد فارسی باشد، اعداد فارسی را معکوس می‌کنیم
+
+
+                $wordLength = mb_strlen($word, 'UTF-8');
+
+                if (mb_strlen($currentLine . $word . ' ', 'UTF-8') <= $maxLineWidth) {
+                    // اگر کلمه فعلی به همراه فاصله‌ی اضافی به خط فعلی اضافه شود، طول خط فعلی بیشتر از حداکثر عرض خواهد شد
+                    // بنابراین می‌توانیم این کلمه را به خط فعلی اضافه کنیم
+                    if (!empty($currentLine)) {
+                        $currentLine .= ' ';
+                    }
+                    $currentLine .= $word;
+                } else {
+                    // اگر کلمه فعلی بیش از حداکثر عرض خط باشد، آن را به خط جدید اضافه می‌کنیم
+                    $newLines[] = $currentLine;
+                    $currentLine = $word;
+                }
+
+            }
+        }
+
+        // اضافه کردن جمله آخر به خطوط جدید
+        if (!empty($currentLine)) {
+            $newLines[] = $currentLine;
+        }
+
+
+
+        // ترکیب خطوط تراز شده به یکدیگر
+        $justifiedText = implode("\n", $newLines);
+
+        $numberLines = count($newLines);
+
+        for ($i = 0; $i < $numberLines; $i++) {
+            $persian_text_rev = \PersianRender\PersianRender::render($newLines[$i]);
+
+            $image->text($persian_text_rev, 900, $i * ($fontSize + 30) + 1100 + $top, function ($font) use ($fontSize,$color,$fontFamily) {
+                $font->file($fontFamily);
+                $font->size($fontSize + 6);
+                $font->color($color);
+                $font->align('right');
+                $font->valign('center');
+            });
+        }
+    }
+
+    public function newsDigiato($newsNumber = 0)
+    {
+
+        $url = "https://digiato.com/feed";
+        $response = Http::get($url);
+        if ($response->ok()) {
+            $xmlString = $response->body();
+            // Process the XML content here
+        } else {
+            // Handle the case when the request fails
+            $statusCode = $response->status();
+            // Handle the error accordingly
+        }
+        $xml = simplexml_load_string($xmlString);
+        $channel = $xml->channel;
+        $firstItem = $channel->item[$newsNumber];
+
+
+// Accessing the item properties
+        $title = (string)$firstItem->title;
+        $image = (string)$firstItem->image->url;
+
+
+        $cleanTitle = str_replace('/ عکس', ' ', $title);
+        $link = (string)$firstItem->link;
+        $replacements = array(
+            "دیجیاتو نوشت" => "",
+            "روزیاتو نوشت" => "",
+            "گجت نیوز نوشت" => "",
+            "زومیت نوشت" => "",
+            "همشهری‌آنلاین نوشت" => "",
+            "ایسنا نوشت" => "",
+            $title => "",
+            'The' => "",
+        );
+        $cleanDescription = str_replace(array_keys($replacements), array_values($replacements), (string)$firstItem->description);
+        $description = $cleanDescription;
+        $pubDate = (string)$firstItem->pubDate;
+
+        $patternp = '/<p>(.*?)<\/p>/s';
+
+        if (preg_match($patternp, $description, $matches)) {
+            $paragraph = $matches[0];
+
+        } else {
+            $paragraph = '';
+        }
+
+
+        $notag = strip_tags($description);
+        $replacements = array(
+            "دیجیاتو نوشت" => "",
+            "روزیاتو نوشت" => "",
+            "گجت نیوز نوشت" => "",
+            "زومیت نوشت" => "",
+            "همشهری‌آنلاین نوشت" => "",
+            "appeared first on دیجیاتو." => "",
+        );
+        $cleanDescription = str_replace(array_keys($replacements), array_values($replacements), $notag);
+        $des = str_replace("\n",'',$cleanDescription);
+
+
+        $persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        $convertedString = str_replace($persianDigits, $englishDigits, $des);
+
+        return [
+            'imageUrl' => str_replace('.webp','',$image),
+            'title' => $cleanTitle,
+            'description' => $convertedString,
+        ];
+    }
+
+
 }
+
