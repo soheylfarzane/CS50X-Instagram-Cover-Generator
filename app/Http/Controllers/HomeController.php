@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -30,8 +31,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function cover($image,$text1,$text2)
+    public function cover($image,$text1,$text2,$font1)
     {
+
+
         $mainImage = Image::make('template/cover/01/01.png');
         $userImage = Image::make($image)->fit(1080, 1080);
 
@@ -46,23 +49,23 @@ class HomeController extends Controller
         $heading2Text = \PersianRender\PersianRender::render($text2);
         $textLayer = Image::make('template/cover/01/00.png');
 
-        $textLayer->text($headingText, 540,  758 , function ($font)  {
-            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+        $textLayer->text($headingText, 540,  758 , function ($font) use ($font1)  {
+            $font->file($font1);
             $font->size(85);
             $font->color('#454545');
             $font->align('center');
             $font->valign('center');
         });
         $textLayer->text($heading2Text, 540,  958 , function ($font)  {
-            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->file('fonts/yekan/YekanBakhFaNum-Black.ttf');
             $font->size(76);
             $font->color('#6a6a6a');
             $font->align('center');
             $font->valign('center');
         });
         $textLayer->blur(10);
-        $textLayer->text($headingText, 540,  750 , function ($font)  {
-            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+        $textLayer->text($headingText, 540,  750 , function ($font) use ($font1) {
+            $font->file($font1);
             $font->size(85);
             $font->color('#ffffff');
             $font->align('center');
@@ -70,7 +73,7 @@ class HomeController extends Controller
         });
 
         $textLayer->text($heading2Text, 540,  950 , function ($font)  {
-            $font->file('fonts/YekanBakhFaNum-Black.ttf');
+            $font->file('fonts/yekan/YekanBakhFaNum-Black.ttf');
             $font->size(76);
             $font->color('#f5ed0f');
             $font->align('center');
@@ -86,15 +89,20 @@ class HomeController extends Controller
     public function index()
     {
 
+        $fonts = DB::table('fonts')->get();
 
-        return view('createForm');
+        return view('createForm',[
+            'fonts' => $fonts
+        ]);
     }
 
     public function generator(Request $request)
     {
+        $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
         $image =  uploadResize($request,'image','1080');
+
 //        return $image;
-         $path = $this->cover($image,$request['headding1'],$request['headding2']);
+         $path = $this->cover($image,$request['headding1'],$request['headding2'],$headding1Font->path);
          return view('result',[
              'path' => $path,
          ]);

@@ -49,10 +49,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'unique:users','digits:11'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+        ],[
+            'phone.digits' => 'شماره موبایل صحیح نمی باشد',
+            'phone.unique' => 'این شماره موبایل از قبل ثبت شده است.',
         ]);
     }
 
@@ -64,10 +68,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $user = User::get();
+        if (count($user) == 0) {
+            $permission = 1;
+        } else {
+            $permission = 4;
+        }
+
+
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => '09113875648',
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
     }

@@ -45,6 +45,23 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label for="headding1Font" class="col-md-4 col-form-label text-md-end">{{ __('فونت عنوان را انتخاب کنید') }}</label>
+
+                                <div class="col-md-6">
+                                    <select id="headding1Font"  class="form-control @error('headding1Font') is-invalid @enderror" name="headding1Font"  autofocus>
+                                        @foreach($fonts as $font)
+                                        <option value="{{$font->id}}">{{$font->name}}-{{$font->weight}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('headding1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="row mb-3">
                                 <label for="headding2" class="col-md-4 col-form-label text-md-end">{{ __('زیر عنوان را وارد کنید') }}</label>
