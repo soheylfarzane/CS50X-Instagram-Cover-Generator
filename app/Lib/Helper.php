@@ -106,7 +106,7 @@ if (!function_exists('uploadResize')) {
         $year = Carbon::now()->year;
         $month = Carbon::now()->month;
         $day = Carbon::now()->day;
-        $path = '/uploads/' . $year . '/' . $month . '/' . $day . '/';
+        $path = 'uploads/' . $year . '/' . $month . '/' . $day . '/';
         $directory = public_path($path);
 
         if (!File::isDirectory($directory)) {
@@ -116,7 +116,7 @@ if (!function_exists('uploadResize')) {
 
         $file = $request->file($name);
 
-        if (!in_array($file->getClientOriginalExtension(), ['jpg', 'png'])) {
+        if (!in_array($file->getClientOriginalExtension(), ['jpg','JPG','Jpg','PNG','Png', 'png'])) {
             return redirect()->route('MediaList')->with('fail', 'فرمت فایل مورد نظر پشتیبانی نمی شود.');
         }
 

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
+use Illuminate\Http\Request;
 
 //use Intervention\Image\ImageManagerStatic as Image;
 
@@ -26,10 +30,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function cover()
+    public function cover($image,$text1,$text2)
     {
         $mainImage = Image::make('template/cover/01/01.png');
-        $userImage = Image::make('template/cover/01/02.jpg')->fit(1080, 1080);
+        $userImage = Image::make($image)->fit(1080, 1080);
 
         $shadowImage = Image::make('template/cover/01/03.png')->fit(1080, 1080);
         $line1Image = Image::make('template/cover/01/04.png')->fit(1080, 1080);
@@ -38,8 +42,8 @@ class HomeController extends Controller
         $mainImage->insert($shadowImage,'center');
         $mainImage->insert($line1Image,'center');
         $mainImage->insert($line2Image,'center');
-        $headingText = \PersianRender\PersianRender::render('2 راهکار ورود به اکسپلور');
-        $heading2Text = \PersianRender\PersianRender::render('جذاب ترین کاور ها رو بساز');
+        $headingText = \PersianRender\PersianRender::render($text1);
+        $heading2Text = \PersianRender\PersianRender::render($text2);
         $textLayer = Image::make('template/cover/01/00.png');
 
         $textLayer->text($headingText, 540,  758 , function ($font)  {
@@ -49,11 +53,11 @@ class HomeController extends Controller
             $font->align('center');
             $font->valign('center');
         });
-        $textLayer->text($heading2Text, 950,  958 , function ($font)  {
+        $textLayer->text($heading2Text, 540,  958 , function ($font)  {
             $font->file('fonts/YekanBakhFaNum-Black.ttf');
             $font->size(76);
             $font->color('#6a6a6a');
-            $font->align('right');
+            $font->align('center');
             $font->valign('center');
         });
         $textLayer->blur(10);
@@ -65,45 +69,35 @@ class HomeController extends Controller
             $font->valign('center');
         });
 
-        $textLayer->text($heading2Text, 950,  950 , function ($font)  {
+        $textLayer->text($heading2Text, 540,  950 , function ($font)  {
             $font->file('fonts/YekanBakhFaNum-Black.ttf');
             $font->size(76);
             $font->color('#f5ed0f');
-            $font->align('right');
+            $font->align('center');
             $font->valign('center');
         });
         $mainImage->insert($textLayer,'center');
 
-        return $mainImage->response();
+        $current = Carbon::now()->format('YmdHs');
+        $path = 'results/result'.$current.'.jpg';
+        $mainImage->save($path);
+        return $path;
     }
     public function index()
     {
 
-        return $this->cover();
 
-        $news = $this->newsDigiato(3);
+        return view('createForm');
+    }
 
-        $newsImage =  $news['imageUrl'];
-        $newsTitle =  $news['title'];
-        $newsDescription =  $news['description'];
-        $image = Image::make('template/story/news/01.png');
-        $featureImage = Image::make($newsImage)->fit(840, 600,);
-        $featureImageOpacity = Image::make($newsImage)->fit(1080, 1920);
-        $image->insert($featureImageOpacity, 'center');
-        $logo = Image::make('template/story/news/logo-w.png')->fit(150, 80);
-//        $image->insert($featureImage, 'top', 0, 105);
-        $image->insert('template/story/news/02.png', 'center');
-        $image->insert($logo, 'bottom-center', 50, 90);
-        $this->writHeading($image,$newsTitle,66,'#ffffff','fonts/YekanBakhFaNum-Black.ttf',-800);
-        $text = $newsDescription;
-        $this->writeJustify($image, $text);
-
-
-
-
-        return $image->response();
-
-        return view('home');
+    public function generator(Request $request)
+    {
+        $image =  uploadResize($request,'image','1080');
+//        return $image;
+         $path = $this->cover($image,$request['headding1'],$request['headding2']);
+         return view('result',[
+             'path' => $path,
+         ]);
     }
 
     private function writeJustify($image, $text = 'لورم ایپسوم یک متن ساختگی به زبان فارسی می باشد.این New My Lorem Ipsum  است.', $fontSize = 28,$color = '#ffffff',$fontFamily = 'fonts/YekanBakhFaNum-Bold.ttf', $top = 0)
