@@ -18,6 +18,7 @@ Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'templ
 Route::get('/add/template', [App\Http\Controllers\TemplateController::class, 'addTemplate'])->name('addTemplate');
 Route::post('/generator', [App\Http\Controllers\HomeController::class, 'generator'])->name('generator');
 
+Route::get('/add/category', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
 Auth::routes();
 
 
