@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Lib\Cover;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -20,10 +21,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Show the application dashboard.
@@ -31,64 +32,13 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function cover($image,$text1,$text2,$font1)
-    {
 
 
-        $mainImage = Image::make('template/cover/01/01.png');
-        $userImage = Image::make($image)->fit(1080, 1080);
 
-        $shadowImage = Image::make('template/cover/01/03.png')->fit(1080, 1080);
-        $line1Image = Image::make('template/cover/01/04.png')->fit(1080, 1080);
-        $line2Image = Image::make('template/cover/01/05.png')->fit(1080, 1080);
-        $mainImage->insert($userImage,'center');
-        $mainImage->insert($shadowImage,'center');
-        $mainImage->insert($line1Image,'center');
-        $mainImage->insert($line2Image,'center');
-        $headingText = \PersianRender\PersianRender::render($text1);
-        $heading2Text = \PersianRender\PersianRender::render($text2);
-        $textLayer = Image::make('template/cover/01/00.png');
-
-        $textLayer->text($headingText, 540,  758 , function ($font) use ($font1)  {
-            $font->file($font1);
-            $font->size(85);
-            $font->color('#454545');
-            $font->align('center');
-            $font->valign('center');
-        });
-        $textLayer->text($heading2Text, 540,  958 , function ($font)  {
-            $font->file('fonts/yekan/YekanBakhFaNum-Black.ttf');
-            $font->size(76);
-            $font->color('#6a6a6a');
-            $font->align('center');
-            $font->valign('center');
-        });
-        $textLayer->blur(10);
-        $textLayer->text($headingText, 540,  750 , function ($font) use ($font1) {
-            $font->file($font1);
-            $font->size(85);
-            $font->color('#ffffff');
-            $font->align('center');
-            $font->valign('center');
-        });
-
-        $textLayer->text($heading2Text, 540,  950 , function ($font)  {
-            $font->file('fonts/yekan/YekanBakhFaNum-Black.ttf');
-            $font->size(76);
-            $font->color('#f5ed0f');
-            $font->align('center');
-            $font->valign('center');
-        });
-        $mainImage->insert($textLayer,'center');
-
-        $current = Carbon::now()->format('YmdHs');
-        $path = 'results/result'.$current.'.jpg';
-        $mainImage->save($path);
-        return $path;
-    }
     public function index()
     {
-
+        $cover = NEW Cover();
+        return $cover->coverKalateModel1('template/cover/02/02.jpg','چطور با فالور کم!!','زیاد بفروشم؟؟','@SoheylFarzane');
         $fonts = DB::table('fonts')->get();
 
         return view('createForm',[
@@ -98,11 +48,30 @@ class HomeController extends Controller
 
     public function generator(Request $request)
     {
-        $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
-        $image =  uploadResize($request,'image','1080');
 
-//        return $image;
-         $path = $this->cover($image,$request['headding1'],$request['headding2'],$headding1Font->path);
+
+        $this->validate($request,[
+           'headding1' => 'required|max:30',
+           'headding2' => 'required|max:30',
+        ],[
+            'headding1.required' => 'این فیلد الزامی می باشد',
+            'headding1.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+            'headding2.required' => 'این فیلد الزامی می باشد',
+            'headding2.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+        ]);
+        $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
+        $headding2Font = DB::table('fonts')->where('id',$request['headding2Font'])->first();
+        $image =  uploadResize($request,'image','1080');
+        if ($image == false)
+        {
+            return redirect()->back()->with('fail', 'فرمت فایل مورد نظر پشتیبانی نمی شود. jpg و png پشتیبانی می شود.');
+        }
+        if ($image == 'empty')
+        {
+            return redirect()->back()->with('fail', 'لطفا یک فایل انتخاب کنید... فرمت باید jpg یا png باشد');
+        }
+
+         $path = $this->cover($image,$request['headding1'],$request['headding2'],$headding1Font->path,$headding2Font->path);
          return view('result',[
              'path' => $path,
          ]);

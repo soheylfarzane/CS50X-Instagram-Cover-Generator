@@ -1,0 +1,15 @@
+@font-face {
+    font-family: iransans;
+    src: url('../fonts/iransans/IRANSans.ttf');
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    :root {
+        scroll-behavior: smooth;
+    }
+}
+.iran {
+    font-family: IRANSans;
+    text-align: right;
+    direction: rtl;
+}
