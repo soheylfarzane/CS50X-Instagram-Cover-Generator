@@ -37,9 +37,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $cover = NEW Cover();
-        return $cover->coverKalateModel1('template/cover/02/02.jpg','چطور با فالور کم!!','زیاد بفروشم؟؟','@SoheylFarzane');
-        $fonts = DB::table('fonts')->get();
+         $fonts = DB::table('fonts')->get();
 
         return view('createForm',[
             'fonts' => $fonts
@@ -49,6 +47,7 @@ class HomeController extends Controller
     public function generator(Request $request)
     {
 
+        $cover = NEW Cover();
 
         $this->validate($request,[
            'headding1' => 'required|max:30',

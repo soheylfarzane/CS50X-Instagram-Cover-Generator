@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'templates'])->name('templates');
+Route::get('/add/template', [App\Http\Controllers\TemplateController::class, 'addTemplate'])->name('addTemplate');
 Route::post('/generator', [App\Http\Controllers\HomeController::class, 'generator'])->name('generator');
 
 Auth::routes();
