@@ -25,7 +25,7 @@
                             <p>
 
                             </p>
-                        <form method="POST" action="{{ route('generator') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('storeTemplate') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row mb-3">
@@ -70,47 +70,32 @@
                                 <div class="col-md-6">
                                     <input id="key"
                                             class="form-control iran @error('key') is-invalid @enderror"
-                                            name="key">
+                                            name="key" value="{{ old('key') }}">
 
 
                                     @error('key')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback iran" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                             </div>
 
+
                             <div class="row mb-3">
-                                <label for="font"
+                                <label for="font_id"
                                        class="col-md-4 col-form-label text-md-end iran">{{ __('فونت اصلی') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="font" type="text"
-                                           class="form-control iran @error('font') is-invalid @enderror"
-                                           name="font" value="{{ old('font') }}">
-
-                                    @error('font')
-                                    <span class="invalid-feedback iran" role="alert">
-                                        <strong class="iran">{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="headding2Font"
-                                       class="col-md-4 col-form-label text-md-end iran">{{ __('فونت زیر عنوان را انتخاب کنید') }}</label>
-
-                                <div class="col-md-6">
-                                    <select id="font"
-                                            class="form-control iran @error('font') is-invalid @enderror"
-                                            name="font">
+                                    <select id="font_id"
+                                            class="form-control iran @error('font_id') is-invalid @enderror"
+                                            name="font_id">
                                         @foreach($fonts as $font)
                                             <option value="{{$font->id}}">{{$font->name}}  {{$font->weight}}</option>
                                         @endforeach
                                     </select>
 
-                                    @error('font')
+                                    @error('font_id')
                                     <span class="invalid-feedback iran" role="alert">
                                         <strong class="iran">{{ $message }}</strong>
                                     </span>
@@ -118,19 +103,19 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="headding2Font"
+                                <label for="category_id"
                                        class="col-md-4 col-form-label text-md-end iran">{{ __('دسته بندی') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="category"
-                                            class="form-control iran @error('font') is-invalid @enderror"
-                                            name="category">
+                                    <select id="category_id"
+                                            class="form-control iran @error('category_id') is-invalid @enderror"
+                                            name="category_id">
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
 
-                                    @error('category')
+                                    @error('category_id')
                                     <span class="invalid-feedback iran" role="alert">
                                         <strong class="iran">{{ $message }}</strong>
                                     </span>

@@ -56,7 +56,7 @@ class Cover
         $mainImage->save($path);
         return $path;
     }
-    public function coverKalateModel1($image,$headingText,$subHeadingText,$instagramIdText,$heading1FontFamily = 'fonts/yekan/YekanBakhFaNum-Black.ttf',$heading2FontFamily = 'fonts/yekan/YekanBakhFaNum-Black.ttf',)
+    public function coverKalateModel1($image,$headingText,$subHeadingText,$instagramIdText = null,$heading1FontFamily = 'fonts/yekan/YekanBakhFaNum-Black.ttf',$heading2FontFamily = 'fonts/yekan/YekanBakhFaNum-Black.ttf',)
     {
         $headingText = \PersianRender\PersianRender::render($headingText);
         $subHeadingText = \PersianRender\PersianRender::render($subHeadingText);
@@ -69,9 +69,19 @@ class Cover
         $mainImage->insert($userImage,'center');
         $mainImage->insert($layer1Image,'center');
         $mainImage->insert($layer2Image,'center');
-        $mainImage->insert($instagramImage,'bottom-left',30,50);
-        $textLayer = Image::make('template/cover/01/00.png');
 
+
+        $textLayer = Image::make('template/cover/01/00.png');
+        if ($instagramIdText !== null) {
+            $mainImage->insert($instagramImage,'bottom-left',30,50);
+            $textLayer->text($instagramIdText, 120,  1000 , function ($font) use ($heading1FontFamily)  {
+                $font->file($heading1FontFamily);
+                $font->size(36);
+                $font->color('#393939');
+                $font->align('bottom-left');
+                $font->valign('bottom-left');
+            });
+        }
         $textLayer->text($headingText, 540,  750 , function ($font) use ($heading1FontFamily,)  {
             $font->file($heading1FontFamily);
             $font->size(110);
@@ -86,15 +96,13 @@ class Cover
             $font->align('center');
             $font->valign('center');
         });
-        $textLayer->text($instagramIdText, 120,  1000 , function ($font) use ($heading1FontFamily)  {
-            $font->file($heading1FontFamily);
-            $font->size(36);
-            $font->color('#393939');
-            $font->align('bottom-left');
-            $font->valign('bottom-left');
-        });
+
         $mainImage->insert($textLayer,'center');
         $mainImage->insert($frameImage,'center');
-        return $mainImage->response();
+        $current = Carbon::now()->format('YmdHs');
+        $path = 'results/result'.$current.'.jpg';
+        $mainImage->save($path);
+        return $path;
+
     }
 }

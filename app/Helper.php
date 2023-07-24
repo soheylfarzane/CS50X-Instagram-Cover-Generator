@@ -149,3 +149,55 @@ if (!function_exists('uploadResize')) {
 
 }
 
+
+if (!function_exists('uploader')) {
+
+    function uploader($request, $folder, $name = 'photo',$size = 256,)
+    {
+
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $day = Carbon::now()->day;
+        $path = 'uploads/'.$folder.'/' . $year . '/' . $month . '/' . $day . '/';
+        $directory = public_path($path);
+
+        if (!File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+
+
+        $file = $request->file($name);
+        if (empty($file))
+        {
+            return 'empty';
+        }
+
+        if (!in_array($file->getClientOriginalExtension(), ['jpg','JPG','Jpg','PNG','Png', 'png'])) {
+            return false;
+        }
+
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $url = $path . time();
+        $destinationPath = public_path($url);
+        $file->move($destinationPath, $fileName);
+        $photo = $url . '/' . $fileName;
+
+        // Resize the image to 256px
+        $resizedImage = Image::make($destinationPath . '/' . $fileName)->resize($size, null, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        // Save the resized image
+        $resizedImage->save($destinationPath . '/' . $name . $size . '-' . $size .'-'. $fileName);
+
+        // Get the URL of the resized image
+
+
+        return $url . '/' . $name . $size . '-' . $size.'-'. $fileName;;
+
+    }
+
+
+}
+

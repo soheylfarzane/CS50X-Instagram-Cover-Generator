@@ -27,7 +27,7 @@
                                 <div class="col-md-4">
                                 </div>
                                 <div class="col-md-4">
-                                    <img src="template/cover.png" class="img-fluid">
+                                    <img src="/{{$template->thumbnail}}" class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                             <p>
 
                             </p>
-                        <form method="POST" action="{{ route('generator') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('generator',$template->slug) }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row mb-3">

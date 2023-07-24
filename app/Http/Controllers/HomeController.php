@@ -35,42 +35,76 @@ class HomeController extends Controller
 
 
 
-    public function index()
+    public function index($key)
     {
+        $template = DB::table('templates')->where('slug','=',$key)->first();
          $fonts = DB::table('fonts')->get();
 
         return view('createForm',[
-            'fonts' => $fonts
+            'fonts' => $fonts,
+            'template' => $template,
         ]);
     }
 
-    public function generator(Request $request)
+    public function generator($key,Request $request)
     {
-
         $cover = NEW Cover();
-
-        $this->validate($request,[
-           'headding1' => 'required|max:30',
-           'headding2' => 'required|max:30',
-        ],[
-            'headding1.required' => 'این فیلد الزامی می باشد',
-            'headding1.max' => 'حداکثر 30 کاراکتر وارد کنید.',
-            'headding2.required' => 'این فیلد الزامی می باشد',
-            'headding2.max' => 'حداکثر 30 کاراکتر وارد کنید.',
-        ]);
-        $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
-        $headding2Font = DB::table('fonts')->where('id',$request['headding2Font'])->first();
-        $image =  uploadResize($request,'image','1080');
-        if ($image == false)
+        if ($key == 'coverKaviyani')
         {
-            return redirect()->back()->with('fail', 'فرمت فایل مورد نظر پشتیبانی نمی شود. jpg و png پشتیبانی می شود.');
-        }
-        if ($image == 'empty')
+
+            $this->validate($request,[
+                'headding1' => 'required|max:30',
+                'headding2' => 'required|max:30',
+            ],[
+                'headding1.required' => 'این فیلد الزامی می باشد',
+                'headding1.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+                'headding2.required' => 'این فیلد الزامی می باشد',
+                'headding2.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+            ]);
+            $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
+            $headding2Font = DB::table('fonts')->where('id',$request['headding2Font'])->first();
+            $image =  uploadResize($request,'image','1080');
+            if ($image == false)
+            {
+                return redirect()->back()->with('fail', 'فرمت فایل مورد نظر پشتیبانی نمی شود. jpg و png پشتیبانی می شود.');
+            }
+            if ($image == 'empty')
+            {
+                return redirect()->back()->with('fail', 'لطفا یک فایل انتخاب کنید... فرمت باید jpg یا png باشد');
+            }
+
+            $path = $cover->coverKaviyani($image,$request['headding1'],$request['headding2'],$headding1Font->path,$headding2Font->path);
+        }elseif($key == 'coverKalateModel1')
         {
-            return redirect()->back()->with('fail', 'لطفا یک فایل انتخاب کنید... فرمت باید jpg یا png باشد');
+            $this->validate($request,[
+                'headding1' => 'required|max:30',
+                'headding2' => 'required|max:30',
+            ],[
+                'headding1.required' => 'این فیلد الزامی می باشد',
+                'headding1.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+                'headding2.required' => 'این فیلد الزامی می باشد',
+                'headding2.max' => 'حداکثر 30 کاراکتر وارد کنید.',
+            ]);
+            $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
+            $headding2Font = DB::table('fonts')->where('id',$request['headding2Font'])->first();
+            $image =  uploadResize($request,'image','1080');
+            if ($image == false)
+            {
+                return redirect()->back()->with('fail', 'فرمت فایل مورد نظر پشتیبانی نمی شود. jpg و png پشتیبانی می شود.');
+            }
+            if ($image == 'empty')
+            {
+                return redirect()->back()->with('fail', 'لطفا یک فایل انتخاب کنید... فرمت باید jpg یا png باشد');
+            }
+
+            $path = $cover->coverKalateModel1($image,$request['headding1'],$request['headding2'],'@soheylfarzane',$headding1Font->path,$headding2Font->path);
         }
 
-         $path = $this->cover($image,$request['headding1'],$request['headding2'],$headding1Font->path,$headding2Font->path);
+
+
+
+
+
          return view('result',[
              'path' => $path,
          ]);

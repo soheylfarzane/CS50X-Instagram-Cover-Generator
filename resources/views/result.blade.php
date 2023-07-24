@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <img class="img-fluid" src="{{$path}}">
+                    <img class="img-fluid" src="/{{$path}}">
 
                     <a href="{{$path}}" class="btn btn-primary col-12 iran" style="margin-top: 25px">دریافت فایل</a>
                 </div>

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('thumbnail');
-            $table->boolean('active')->default(false);
-            $table->boolean('font');
+            $table->boolean('active')->default(true);
+            $table->boolean('font_id');
             $table->string('category_id');
             $table->timestamps();
         });
