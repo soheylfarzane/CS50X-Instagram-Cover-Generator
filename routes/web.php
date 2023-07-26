@@ -12,17 +12,31 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+//مسیر های عمومی مدیریت
+Route::get('/', [App\Http\Controllers\HomeController::class, 'main'])->name('dashboard');
+Route::get('generate/{key}', [App\Http\Controllers\HomeController::class, 'index'])->name('generator');
 
-Route::get('generate/{key}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+//مسیر های مرتبط با قالب ها
 Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'templates'])->name('templates');
 Route::get('/add/template', [App\Http\Controllers\TemplateController::class, 'addTemplate'])->name('addTemplate');
 Route::post('/add/template', [App\Http\Controllers\TemplateController::class, 'storeTemplate'])->name('storeTemplate');
 
-
+//مسیر های مرتبط با سازنده
 Route::post('/generator/{key}', [App\Http\Controllers\HomeController::class, 'generator'])->name('generator');
 
+//مسیر های مرتبط با دسته بندی
 Route::get('/add/category', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
-Auth::routes();
+
+//مسیر های مرتبط با فونت ها
+Route::get('/fontsList', [App\Http\Controllers\FontController::class, 'fontsList'])->name('fontsList');
+//مسیر های مرتبط با تنظیمات
+Route::get('/setting', [App\Http\Controllers\SettingController::class, 'setting'])->name('setting');
+
+//مسیر های مرتبط با نتایج
 
 
+//مسیر های مرتبط با آپلود فایل ها
+
+// مسیر های مرتبط با کاربران
+Route::get('/users', [App\Http\Controllers\UserController::class, 'usersList'])->name('usersList');

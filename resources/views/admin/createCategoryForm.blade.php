@@ -25,7 +25,7 @@
                             <p>
 
                             </p>
-                        <form method="POST" action="{{ route('generator') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('addCategory') }}" enctype="multipart/form-data">
                             @csrf
 
 
