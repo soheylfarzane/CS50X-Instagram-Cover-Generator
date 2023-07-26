@@ -26,10 +26,12 @@ Route::post('/add/template', [App\Http\Controllers\TemplateController::class, 's
 Route::post('/generator/{key}', [App\Http\Controllers\HomeController::class, 'generator'])->name('generator');
 
 //مسیر های مرتبط با دسته بندی
+Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'categories'])->name('categories');
 Route::get('/add/category', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
 
 //مسیر های مرتبط با فونت ها
 Route::get('/fontsList', [App\Http\Controllers\FontController::class, 'fontsList'])->name('fontsList');
+    Route::get('/add/font', [App\Http\Controllers\FontController::class, 'addFont'])->name('addFont');
 //مسیر های مرتبط با تنظیمات
 Route::get('/setting', [App\Http\Controllers\SettingController::class, 'setting'])->name('setting');
 

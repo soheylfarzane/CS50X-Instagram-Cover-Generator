@@ -7,7 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function addCategory()
+    public function categories()
+    {
+        $categories = DB::table('categories')->get();
+
+        return view('admin/categoryList',[
+            'categories' => $categories,
+        ]);
+
+    }    public function addCategory()
     {
         $fonts = DB::table('fonts')->get();
         $categories = DB::table('categories')->get();
