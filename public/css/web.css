@@ -2,6 +2,14 @@
     font-family: iransans;
     src: url('../fonts/iransans/IRANSans.ttf');
 }
+@font-face {
+    font-family: kalameh;
+    src: url('../fonts/kalame/Kalameh-Bold.ttf');
+}
+@font-face {
+    font-family: ray;
+    src: url('../fonts/ray/Ray-Black.ttf');
+}
 
 @media (prefers-reduced-motion: no-preference) {
     :root {
@@ -10,6 +18,15 @@
 }
 .iran {
     font-family: IRANSans;
+    text-align: right;
+    direction: rtl;
+}
+.Kalameh_bold {
+    font-family: kalameh;
+    text-align: right;
+    direction: rtl;
+}.ray {
+    font-family: ray;
     text-align: right;
     direction: rtl;
 }

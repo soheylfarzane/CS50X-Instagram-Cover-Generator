@@ -91,7 +91,17 @@
                                             class="form-control iran @error('font_id') is-invalid @enderror"
                                             name="font_id">
                                         @foreach($fonts as $font)
-                                            <option value="{{$font->id}}">{{$font->name}}  {{$font->weight}}</option>
+                                            <option
+                                                class="
+                                                @if($font->name == 'کلمه')
+                                                    Kalameh_bold
+                                                @elseif($font->name == 'ری')
+                                                    ray
+@endif
+                                                "
+
+
+                                                value="{{$font->id}}">{{$font->name}}  {{$font->weight}}</option>
                                         @endforeach
                                     </select>
 

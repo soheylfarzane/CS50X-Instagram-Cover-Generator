@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header iran">
                         <p class="float-end">{{ __('قالب ها') }}</p>
-                        <a class="btn btn-success float-start" type="submit" href="{{route('addCategory')}}">افزودن قالب</a>
+                        <a class="btn btn-success float-start" type="submit" href="{{route('addTemplate')}}">افزودن قالب</a>
                     </div>
 
                     <div class="card-body">
