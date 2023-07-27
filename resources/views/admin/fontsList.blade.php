@@ -29,14 +29,17 @@
 
                             @foreach($fonts as $font)
                                 <div class="row">
-                                    <a class="btn btn-primary col-6 float-start iran m-1" href="">
+                                    <a class="btn btn-primary col-8 float-start iran m-1" href="">
                                         {{$font->name}}
                                         -
                                         {{$font->weight}}
                                     </a>
-                                    <a class="btn btn-danger col-5 float-start iran m-1" type="button" >
-                                        حذف
-                                    </a>
+                                    <form class="col-2  float-start iran m-1" action="{{route('deleteFont',$font->id)}}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-danger" type="submit">
+                                            حذف
+                                        </button>
+                                    </form>
                                 </div>
                             @endforeach
                         </ul>

@@ -23,10 +23,27 @@
                         @endif
 
                             <div class="row">
-                                <form method="POST" action="{{ route('addCategory') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('storeFont') }}" enctype="multipart/form-data">
                                     @csrf
 
+                                    <div class="row mb-3">
+                                        <label for="file"
+                                               class="col-md-4 col-form-label text-md-end float-start iran">{{ __('نمونه فایل را انتخاب کنید') }}</label>
 
+                                        <div class="col-md-6">
+                                            <input id="file" type="file"
+                                                   class="form-control @error('image') is-invalid @enderror iran" name="file"
+                                                   value="{{ old('file') }}">
+
+                                            @error('file')
+                                            <span class="invalid-feedback iran" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                            @enderror
+                                        </div>
+
+
+                                    </div>
 
                                     <div class="row mb-3">
                                         <label for="name"
@@ -45,15 +62,15 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="name"
-                                               class="col-md-4 col-form-label text-md-end iran">{{ __('عنوان انگلیسی') }}</label>
+                                        <label for="weight"
+                                               class="col-md-4 col-form-label text-md-end iran">{{ __('وزن فونت') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="slug" type="text"
-                                                   class="form-control @error('slug') is-invalid @enderror iran"
-                                                   name="slug" value="{{ old('slug') }}">
+                                            <input id="weight" type="text"
+                                                   class="form-control @error('weight') is-invalid @enderror iran"
+                                                   name="weight" value="{{ old('weight') }}" required>
 
-                                            @error('slug')
+                                            @error('weight')
                                             <span class="invalid-feedback iran" role="alert">
                                         <strong class="iran">{{ $message }}</strong>
                                     </span>

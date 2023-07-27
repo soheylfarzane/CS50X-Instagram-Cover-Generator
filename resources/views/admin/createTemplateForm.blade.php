@@ -29,7 +29,7 @@
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="email"
+                                <label for="thumbnail"
                                        class="col-md-4 col-form-label text-md-end float-start iran">{{ __('نمونه فایل را انتخاب کنید') }}</label>
 
                                 <div class="col-md-6">

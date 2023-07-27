@@ -33,7 +33,9 @@ Route::post('/delete/category/{id}', [App\Http\Controllers\CategoryController::c
 
 //مسیر های مرتبط با فونت ها
 Route::get('/fontsList', [App\Http\Controllers\FontController::class, 'fontsList'])->name('fontsList');
-    Route::get('/add/font', [App\Http\Controllers\FontController::class, 'addFont'])->name('addFont');
+Route::get('/add/font', [App\Http\Controllers\FontController::class, 'addFont'])->name('addFont');
+Route::post('/add/font', [App\Http\Controllers\FontController::class, 'storeFont'])->name('storeFont');
+Route::post('/delete/font/{id}', [App\Http\Controllers\FontController::class, 'deleteFont'])->name('deleteFont');
 //مسیر های مرتبط با تنظیمات
 Route::get('/setting', [App\Http\Controllers\SettingController::class, 'setting'])->name('setting');
 

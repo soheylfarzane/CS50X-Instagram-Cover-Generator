@@ -201,3 +201,32 @@ if (!function_exists('uploader')) {
 
 }
 
+if (!function_exists('fileUploader')) {
+
+    function fontUploader($request, $name = 'file')
+    {
+        $path = 'fonts'. '/';
+        $directory = public_path($path);
+
+        if (!File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+        $file = $request->file($name);
+        if (empty($file))
+        {
+            return 'empty';
+        }
+        if (!in_array($file->getClientOriginalExtension(), ['ttf'])) {
+            return false;
+        }
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $url = $path . time();
+        $destinationPath = public_path($url);
+        $file->move($destinationPath, $fileName);
+        $photo = $url . '/' . $fileName;
+        return $url . '/' . $name . $fileName;;
+    }
+
+
+}
+
