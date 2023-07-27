@@ -10,12 +10,13 @@
                 <div class="card">
                     <div class="card-header iran">
                         <p class="float-end">{{ __('دسته بندی قالب ها') }}</p>
-                        <a class="btn btn-success float-start" type="submit" href="{{route('addCategory')}}">افزودن دسته بندی جدید</a>
+                        <a class="btn btn-success float-start" type="submit" href="{{route('addCategory')}}">افزودن دسته
+                            بندی جدید</a>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body iran">
                         @if (session('status'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success iran" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
@@ -24,19 +25,26 @@
                                 {{ session('fail') }}
                             </div>
                         @endif
-                            <ul class="list-group iran" style="padding: 0; margin: 0 !important;">
+                        <ul class="list-group iran" style="padding: 0; margin: 0 !important;">
 
-                                @foreach($categories as $category)
-                                    <div class="row">
-                                        <a class="btn btn-danger col-6 float-start iran m-1" href="">
-                                            {{$category->name}}
-                                        </a>
-                                        <a class="btn btn-primary col-5 float-start iran m-1" type="button" >
-                                            ویرایش
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </ul>
+                            @foreach($categories as $category)
+                                <div class="row">
+                                    <a class="btn btn-success col-7 float-start iran m-1" href="">
+                                        {{$category->name}}
+                                    </a>
+                                    <a class="btn btn-primary col-2 float-start iran m-1" type="button">
+                                        ویرایش
+                                    </a>
+                                    <form class="col-2  float-start iran m-1" action="{{route('deleteCategory',$category->id)}}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-danger " type="submit">
+                                            حذف
+                                        </button>
+                                    </form>
+
+                                </div>
+                            @endforeach
+                        </ul>
 
                     </div>
                 </div>

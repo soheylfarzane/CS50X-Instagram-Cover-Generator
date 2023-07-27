@@ -10,9 +10,9 @@
                 <div class="card">
                     <div class="card-header iran">{{ __('دسته بندی قالب ها') }}</div>
 
-                    <div class="card-body">
+                    <div class="card-body iran">
                         @if (session('status'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success iran" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
@@ -23,7 +23,7 @@
                         @endif
 
                             <div class="row">
-                                <form method="POST" action="{{ route('addCategory') }}" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('storeCategory') }}" enctype="multipart/form-data">
                                     @csrf
 
 

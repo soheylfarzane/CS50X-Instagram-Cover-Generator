@@ -28,6 +28,8 @@ Route::post('/generator/{key}', [App\Http\Controllers\HomeController::class, 'ge
 //مسیر های مرتبط با دسته بندی
 Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'categories'])->name('categories');
 Route::get('/add/category', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
+Route::post('/add/category', [App\Http\Controllers\CategoryController::class, 'storeCategory'])->name('storeCategory');
+Route::post('/delete/category/{id}', [App\Http\Controllers\CategoryController::class, 'deleteCategory'])->name('deleteCategory');
 
 //مسیر های مرتبط با فونت ها
 Route::get('/fontsList', [App\Http\Controllers\FontController::class, 'fontsList'])->name('fontsList');
