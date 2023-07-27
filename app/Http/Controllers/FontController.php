@@ -7,6 +7,7 @@ use App\Models\Font;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class FontController extends Controller
 {
@@ -56,7 +57,9 @@ class FontController extends Controller
     public function deleteFont($id)
     {
 
+        $font = Font::find($id);
+        File::delete($font->path);
         Font::find($id)->delete();
-        return redirect()->route('categories')->with('status', 'دسته بندی با موفقیت حذف شد');
+        return redirect()->route('fontsList')->with('status', 'دسته بندی با موفقیت حذف شد');
     }
 }
