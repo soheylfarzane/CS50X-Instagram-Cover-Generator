@@ -46,3 +46,7 @@ Route::get('/setting', [App\Http\Controllers\SettingController::class, 'setting'
 
 // مسیر های مرتبط با کاربران
 Route::get('/users', [App\Http\Controllers\UserController::class, 'usersList'])->name('usersList');
+
+// مسیر های مرتبط با نتایج
+Route::get('/resultsList', [App\Http\Controllers\ResultsController::class, 'resultsList'])->name('resultsList');
+Route::post('/results/delete/{id}', [App\Http\Controllers\ResultsController::class, 'resultsDelete'])->name('resultsDelete');

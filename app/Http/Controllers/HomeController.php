@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Lib\Cover;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -52,10 +54,10 @@ class HomeController extends Controller
 
     public function generator($key,Request $request)
     {
+        $template = DB::table('templates')->where('slug','=',$key)->first();
         $cover = NEW Cover();
         if ($key == 'coverKaviyani')
         {
-
             $this->validate($request,[
                 'headding1' => 'required|max:30',
                 'headding2' => 'required|max:30',
@@ -77,6 +79,8 @@ class HomeController extends Controller
                 return redirect()->back()->with('fail', 'لطفا یک فایل انتخاب کنید... فرمت باید jpg یا png باشد');
             }
 
+
+            storeUploads($image,Auth::id(),$template->id);
             $path = $cover->coverKaviyani($image,$request['headding1'],$request['headding2'],$headding1Font->path,$headding2Font->path);
         }elseif($key == 'coverKalateModel1')
         {
@@ -108,7 +112,8 @@ class HomeController extends Controller
 
 
 
-
+        File::delete($image);
+        storeResults($path,Auth::id(),$template->id);
          return view('result',[
              'path' => $path,
          ]);

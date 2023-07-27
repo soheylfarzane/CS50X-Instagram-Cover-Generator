@@ -4,6 +4,7 @@ use App\Lib\Data;
 use App\Models\SiteOption;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 
@@ -106,7 +107,7 @@ if (!function_exists('uploadResize')) {
         $year = Carbon::now()->year;
         $month = Carbon::now()->month;
         $day = Carbon::now()->day;
-        $path = 'uploads/' . $year . '/' . $month . '/' . $day . '/';
+        $path = 'uploads/' . $year  . '/';
         $directory = public_path($path);
 
         if (!File::isDirectory($directory)) {
@@ -125,7 +126,7 @@ if (!function_exists('uploadResize')) {
         }
 
         $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $url = $path . time();
+        $url = $path ;
         $destinationPath = public_path($url);
         $file->move($destinationPath, $fileName);
         $photo = $url . '/' . $fileName;
@@ -142,6 +143,7 @@ if (!function_exists('uploadResize')) {
         // Get the URL of the resized image
 
 
+        File::delete($photo);
         return $url . '/' . $name . $size . '-' . $size . $fileName;;
 
     }
@@ -225,6 +227,42 @@ if (!function_exists('fileUploader')) {
         $file->move($destinationPath, $fileName);
         $photo = $url . '/' . $fileName;
         return $url . '/' . $name . $fileName;;
+    }
+
+
+}
+if (!function_exists('storeUploads')) {
+
+    function storeUploads($path,$userID, $templateId)
+    {
+
+        DB::table('uploads')->insert(
+            [
+                'user_id' => $userID,
+                'template_id' => $templateId,
+                'path' => $path,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
+    }
+
+
+}
+if (!function_exists('storeResults')) {
+
+    function storeResults($path,$userID, $templateId)
+    {
+
+        DB::table('results')->insert(
+            [
+                'user_id' => $userID,
+                'template_id' => $templateId,
+                'path' => $path,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
     }
 
 

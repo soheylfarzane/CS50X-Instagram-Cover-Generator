@@ -14,6 +14,8 @@
     <a class="nav-link iran" href="{{ route('fontsList') }}">{{ __('فونت ها') }}</a>
 </li>
 <li class="nav-item">
+<a class="nav-link iran" href="{{ route('resultsList') }}">{{ __('نتایج') }}</a>
+</li><li class="nav-item">
 <a class="nav-link iran" href="{{ route('setting') }}">{{ __('تنظیمات') }}</a>
 </li>
 {{--<li class="nav-item">--}}
