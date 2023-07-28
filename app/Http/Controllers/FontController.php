@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\File;
 
 class FontController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function fontsList()
     {
         $fonts = DB::table('fonts')->get();

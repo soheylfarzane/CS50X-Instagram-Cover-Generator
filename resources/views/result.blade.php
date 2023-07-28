@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appNoMenu')
 
 @section('content')
 <div class="container">
@@ -16,7 +16,8 @@
 
                     <img class="img-fluid" src="/{{$path}}">
 
-                    <a href="{{$path}}" class="btn btn-primary col-12 iran" style="margin-top: 25px">دریافت فایل</a>
+                    <a href="{{$path}}" class="btn btn-primary col-6 iran float-start" style="margin-top: 25px">دریافت فایل</a>
+                    <a href="/" class="btn btn-outline-primary col-6 iran float-start" style="margin-top: 25px">برگرد صفحه اصلی</a>
                 </div>
             </div>
         </div>

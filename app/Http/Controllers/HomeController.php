@@ -34,10 +34,14 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function main()
+    public function userIndex()
     {
-        return view('admin.dashboard');
+        $templates = DB::table('templates')->get();
+        return view('welcome',[
+            'templates' => $templates,
+        ]);
     }
+
 
 
 

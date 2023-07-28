@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\File;
 
 class ResultsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function resultsList()
     {
         $results = DB::table('results')->paginate('20');

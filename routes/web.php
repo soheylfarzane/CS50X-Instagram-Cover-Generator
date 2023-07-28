@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 //مسیر های عمومی مدیریت
-Route::get('/', [App\Http\Controllers\HomeController::class, 'main'])->name('dashboard');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'userIndex'])->name('userIndex');
 Route::get('generate/{key}', [App\Http\Controllers\HomeController::class, 'index'])->name('generator');
+
+//مسیر های مدیریت
+Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 
 //مسیر های مرتبط با قالب ها
 Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'templates'])->name('templates');

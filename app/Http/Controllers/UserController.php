@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function usersList()
     {
         $users = DB::table('users')->paginate(20);
