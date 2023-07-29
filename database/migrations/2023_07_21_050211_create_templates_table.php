@@ -20,7 +20,21 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->boolean('active')->default(true);
             $table->boolean('font_id');
+            $table->boolean('text1');
+            $table->boolean('text2')->default(false);
+            $table->boolean('text3')->default(false);
+            $table->boolean('text4')->default(false);
+            $table->boolean('text5')->default(false);
+            $table->boolean('longText')->default(false);
+            $table->integer('maxText1');
+            $table->integer('maxText2')->nullable();
+            $table->integer('maxText3')->nullable();
+            $table->integer('maxText4')->nullable();
+            $table->integer('maxText5')->nullable();
+            $table->integer('maxLongText')->nullable();
+            $table->boolean('logo')->default(false);
             $table->string('category_id');
+            $table->timestamp('expire_at')->nullable();
             $table->timestamps();
         });
     }

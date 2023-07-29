@@ -22,6 +22,10 @@ class User extends Authenticatable
         'password',
         'profile',
         'phone',
+        'limit',
+        'telegram',
+        'instagram',
+        'slogan',
         'phoneVerified',
         'userId',
         'active',
@@ -32,6 +36,7 @@ class User extends Authenticatable
         'referral',
         'referralUser',
         'token',
+        'expire_at',
     ];
 
     /**

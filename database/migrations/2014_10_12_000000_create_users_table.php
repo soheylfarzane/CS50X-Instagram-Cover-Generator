@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile')->nullable();
             $table->string('phone')->unique();
+            $table->string('limit')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('slogan')->nullable();
             $table->boolean('phoneVerified')->nullable();
             $table->string('userId')->unique()->nullable();
             $table->boolean('active')->default(true);

@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+
+//مسیر های شخصی کاربران
+Route::get('/phone-login', [App\Http\Controllers\GuestController::class, 'phoneLogin'])->name('phoneLogin');
+Route::post('/sendOtp', [App\Http\Controllers\GuestController::class, 'sendOtp'])->name('sendOtp');
+
+
 //مسیر های عمومی مدیریت
 Route::get('/', [App\Http\Controllers\HomeController::class, 'userIndex'])->name('userIndex');
 Route::get('generate/{key}', [App\Http\Controllers\HomeController::class, 'index'])->name('generator');
