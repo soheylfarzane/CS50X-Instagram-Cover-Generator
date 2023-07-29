@@ -68,9 +68,13 @@
                                        class="col-md-4 col-form-label text-md-end iran">{{ __('کلید برنامه نویسی') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="key"
+                                    <select id="key"
                                             class="form-control iran @error('key') is-invalid @enderror"
-                                            name="key" value="{{ old('key') }}">
+                                            name="category_id">
+                                        @foreach($keys as $index => $key)
+                                            <option value="{{$key}}">{{$index}}</option>
+                                        @endforeach
+                                    </select>
 
 
                                     @error('key')

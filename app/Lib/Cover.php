@@ -7,6 +7,16 @@ use Intervention\Image\Facades\Image;
 
 class Cover
 {
+    public function keys()
+    {
+        $keys =
+            [
+                'دکتر کاویانی' => 'coverKaviyani',
+                'کاور کلاته مدل اول' => 'coverKalateModel1',
+            ];
+
+        return $keys;
+    }
     public function coverKaviyani($image, $text1, $text2, $heading1FontFamily,$heading2FontFamily)
     {
         $mainImage = Image::make('template/cover/01/01.png');

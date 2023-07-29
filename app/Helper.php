@@ -150,8 +150,6 @@ if (!function_exists('uploadResize')) {
 
 
 }
-
-
 if (!function_exists('uploader')) {
 
     function uploader($request, $folder, $name = 'photo',$size = 256,)
@@ -202,7 +200,6 @@ if (!function_exists('uploader')) {
 
 
 }
-
 if (!function_exists('fileUploader')) {
 
     function fontUploader($request, $name = 'file')
