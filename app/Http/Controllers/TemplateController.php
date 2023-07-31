@@ -23,18 +23,23 @@ class TemplateController extends Controller
 
         $covers = New Keys();
         $keys = $covers->keys();
+        $templates = Template::get();
+
 
 
         return view('admin/createTemplateForm', [
             'fonts' => $fonts,
             'categories' => $categories,
             'keys' => $keys,
+            'templates' => $templates,
         ]);
 
     }
 
     public function storeTemplate(Request $request)
     {
+
+
 
 
         $request->validate([
@@ -63,6 +68,21 @@ class TemplateController extends Controller
             'thumbnail' => $image,
             'font_id' => $request['font_id'],
             'category_id' => $request['category_id'],
+            'text1' => $request['text1'],
+            'text2' => $request['text2'],
+            'text3' => $request['text3'],
+            'text4' => $request['text4'],
+            'text5' => $request['text5'],
+            'text6' => $request['text6'],
+            'longText' => $request['longText'],
+            'maxText1' => $request['maxText1'],
+            'maxText2' => $request['maxText2'],
+            'maxText3' => $request['maxText3'],
+            'maxText4' => $request['maxText4'],
+            'maxText5' => $request['maxText5'],
+            'maxText6' => $request['maxText6'],
+            'maxLongText' => $request['maxLongText'],
+            'logo' => $request['logo'],
         ]);
 
 
