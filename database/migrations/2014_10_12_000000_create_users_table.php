@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('referral')->nullable();
             $table->string('referralUser')->nullable();
             $table->string('token')->nullable();
+            $table->timestamp('expire_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
