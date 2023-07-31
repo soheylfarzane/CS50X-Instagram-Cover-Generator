@@ -16,12 +16,18 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('logo');
+            $table->string('banner1');
+            $table->string('banner2');
+            $table->string('banner3');
+            $table->string('banner4');
             $table->string('slogan');
             $table->string('description');
             $table->string('message');
             $table->string('aboutUrl');
             $table->string('siteUrl');
             $table->string('updatedUrl');
+            $table->timestamp('updated_at');
             $table->string('version');
             $table->timestamps();
         });
