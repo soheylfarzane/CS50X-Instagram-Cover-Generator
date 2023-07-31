@@ -66,9 +66,13 @@
                                                class="col-md-4 col-form-label text-md-end iran">{{ __('وزن فونت') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="weight" type="text"
+                                            <select id="weight" type="text"
                                                    class="form-control @error('weight') is-invalid @enderror iran"
-                                                   name="weight" value="{{ old('weight') }}" required>
+                                                   name="weight" >
+                                                <option value="نازک">نازک</option>
+                                                <option value="عادی" >عادی</option>
+                                                <option value="ضخیم" selected>ضخیم</option>
+                                            </select>
 
                                             @error('weight')
                                             <span class="invalid-feedback iran" role="alert">
