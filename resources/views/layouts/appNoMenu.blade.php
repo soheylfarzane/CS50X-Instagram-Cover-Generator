@@ -18,7 +18,7 @@
     <link href="/css/web.css" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+{{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 
     <style type="text/css">
         .loading {

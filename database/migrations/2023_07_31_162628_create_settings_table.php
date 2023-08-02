@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('message');
             $table->string('aboutUrl');
             $table->string('siteUrl');
+            $table->string('lastUpdate');
             $table->string('updatedUrl');
-            $table->timestamp('updated_at');
             $table->string('version');
             $table->timestamps();
         });
