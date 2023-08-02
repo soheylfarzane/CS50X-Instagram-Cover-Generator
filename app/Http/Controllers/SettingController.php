@@ -41,6 +41,11 @@ class SettingController extends Controller
         $updatedUrl = $this->defaultSetter($request['updatedUrl'], 'https://storyyar.ir/app');
         $version = $this->defaultSetter($request['version'], '1.0.0');
 
+        if ($logo == false || $banner1 == false || $banner2 == false || $banner3 == false || $banner4 == false )
+        {
+            return redirect(route('setting'))->with('fail', 'فرمت تصویر پشتیبانی نمیشود.فرمت های مجاز SVG,PNG,JPG');
+        }
+
         if (!$setting) {
             Setting::create([
                 'name' => $name,
@@ -115,7 +120,7 @@ class SettingController extends Controller
             File::makeDirectory($directory, 0755, true);
         }
 
-        if (!in_array($file->getClientOriginalExtension(), ['jpg', 'JPG', 'Jpg', 'PNG', 'Png', 'png'])) {
+        if (!in_array($file->getClientOriginalExtension(), ['jpg', 'JPG', 'Jpg', 'PNG', 'Png', 'png','svg','SVG'])) {
             return false;
         }
         $fileName = time() . '.' . $file->getClientOriginalExtension();

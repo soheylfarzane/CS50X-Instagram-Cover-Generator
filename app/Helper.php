@@ -94,7 +94,7 @@ if (!function_exists('checkOTP')) {
             }
 
         } else {
-            return sendOTP($phone);
+            return 'unknown';
         }
 
     }
@@ -107,7 +107,7 @@ if (!function_exists('uploadResize')) {
         $year = Carbon::now()->year;
         $month = Carbon::now()->month;
         $day = Carbon::now()->day;
-        $path = 'uploads/' . $year  . '/';
+        $path = 'uploads/' . $year  ;
         $directory = public_path($path);
 
         if (!File::isDirectory($directory)) {

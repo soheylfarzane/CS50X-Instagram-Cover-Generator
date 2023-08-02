@@ -12,4 +12,12 @@ class Category extends Model
         'name',
         'slug',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+    public function templates()
+    {
+        return $this->hasMany(Template::class);
+    }
 }
