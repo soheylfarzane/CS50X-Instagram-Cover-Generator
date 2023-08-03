@@ -58,6 +58,7 @@ class HomeController extends Controller
 
     public function generator($key,Request $request)
     {
+
         $template = DB::table('templates')->where('slug','=',$key)->first();
         $cover = NEW Cover();
         if ($key == 'coverKaviyani')
@@ -73,6 +74,7 @@ class HomeController extends Controller
             ]);
             $headding1Font = DB::table('fonts')->where('id',$request['headding1Font'])->first();
             $headding2Font = DB::table('fonts')->where('id',$request['headding2Font'])->first();
+
             $image =  uploadResize($request,'image','1080');
             if ($image == false)
             {

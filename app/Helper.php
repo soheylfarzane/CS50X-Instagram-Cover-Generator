@@ -236,7 +236,6 @@ if (!function_exists('storeUploads')) {
         DB::table('uploads')->insert(
             [
                 'user_id' => $userID,
-                'template_id' => $templateId,
                 'path' => $path,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
