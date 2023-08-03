@@ -21,6 +21,8 @@
 
 ![Screen Shot](https://storyyar.ir/uploads/template/thumbnail/2023/7/24/1690214643/thumbnail1080-1080-1690214643.png)
 
+[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://youtu.be/gWiJgslGe38)
+
 The Instagram Post Cover Generator Web App is a user-friendly tool designed to create captivating and personalized Instagram post covers without the need for Photoshop. With the ability to change text fonts and full support for Persian text and fonts, this web application offers a seamless experience for users who want to enhance the visual appeal of their posts.
 
 ## Built With
