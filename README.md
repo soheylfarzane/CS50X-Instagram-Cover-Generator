@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
+<br/>
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <h3 align="center">Instagram Post Cover Generator Web App</h3>
+
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Table Of Contents
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* [About the Project](#about-the-project)
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [License](#license)
+* [Authors](#authors)
+* [Acknowledgements](#acknowledgements)
 
-## Learning Laravel
+## About The Project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![Screen Shot](https://storyyar.ir/uploads/template/thumbnail/2023/7/24/1690214643/thumbnail1080-1080-1690214643.png)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The Instagram Post Cover Generator Web App is a user-friendly tool designed to create captivating and personalized Instagram post covers without the need for Photoshop. With the ability to change text fonts and full support for Persian text and fonts, this web application offers a seamless experience for users who want to enhance the visual appeal of their posts.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Built With
 
-## Laravel Sponsors
+Built with PHP 8.0 and Laravel 9 for robust backend functionality.
+Utilizes HTML, CSS, Bootstrap, and JavaScript for responsive and engaging user interface.
+Comprehensive API for easy integration and expansion.
+Follows the Model-View-Controller (MVC) architecture for organized codebase.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Getting Started
 
-### Premium Partners
+Clone the repository: git clone https://github.com/soheylfarzane/CS50X-Instagram-Cover-Generator
+Navigate to the project directory: cd instagram-cover-generator
+Install Composer dependencies: composer install
+Create a .env file by duplicating .env.example and configuring your environment variables.
+Generate an application key: php artisan key:generate
+Run migrations: php artisan migrate
+Start the development server: php artisan serve
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Usage
+
+Open your web browser and navigate to the local development server address.
+Follow the intuitive user interface to:
+Upload your desired image for the Instagram post cover.
+Customize the text and choose from a variety of fonts.
+Preview and adjust the layout.
+Generate the final cover.
+Download the generated cover and use it for your Instagram post.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/soheylFarzane/Instagram Post Cover Generator Web App/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
+* Please make sure you check your spelling and grammar.
+* Create individual PR for each suggestion.
+* Please also read through the [Code Of Conduct](https://github.com/soheylFarzane/Instagram Post Cover Generator Web App/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
-## Code of Conduct
+### Creating A Pull Request
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+We welcome contributions to enhance the Instagram Post Cover Generator Web App. To contribute:
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Fork the repository.
+Create a new branch: git checkout -b feature/your-feature-name
+Commit your changes: git commit -am 'Add new feature'
+Push to the branch: git push origin feature/your-feature-name
+Submit a pull request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
+
+## Authors
+
+* **soheyl Farzane ** - *CS50X Student * - [soheyl Farzane ](https://github.com/soheylfarzane/CS50X-Instagram-Cover-Generator) - *Instagram Post Cover Generator Web App*
+
+## Acknowledgements
+
+* [soheylFarzane ](https://soheylfarzane.ir/)
+* [My GitHub ](https://github.com/soheylfarzane)
+* []()
